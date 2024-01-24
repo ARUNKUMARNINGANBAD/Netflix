@@ -19,9 +19,9 @@ export const checkValidatesignup = (email,password,confirmpassword) => {
     const ispassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password);
 
     if (!isemail) return "Email is not valid";
-    if (!ispassword) return "Password is not valid";
+    if (!ispassword) return "Password is not valid it should contain atleast one special, one uppercase&Lowercase, one numeric of length 8";
 
-    if(password!==confirmpassword) return "confirm password and password should be same";
+    if(password!==confirmpassword) return "password and confirm password should be match same";
 
     return null;
 }
