@@ -4,7 +4,9 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from './Utils/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from './Utils/userSlice';
-import { LOGO } from './Utils/Constant';
+import { LOGO, SUPPORTED_LANUGUAGE } from './Utils/Constant';
+import { toggleGptSearchView} from './Utils/gptSlice'
+import { changeLaungage } from './Utils/appConfig';
 
 const Header = () => {
 
@@ -13,6 +15,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(store => store.user);
+
+  const laungselect =useSelector((store) => store.gptsearch?.sliceToggle);
+
   const handleSignout = () => {
 
     signOut(auth).then(() => {
@@ -23,6 +28,16 @@ const Header = () => {
       // An error happened.
     });
 
+  }
+
+  const hanbleGptsearch = () => { 
+    //console.log("clicked seradch")
+    dispatch(toggleGptSearchView());
+    
+  }
+
+  const handlechangelaung = (e) => { 
+    dispatch(changeLaungage(e.target.value))
   }
 
       useEffect(() => { 
@@ -52,6 +67,14 @@ const Header = () => {
         alt='logo' />
       {user &&
         (<div className='flex p-4 '>
+        { laungselect && (
+          <select className='px-4 py-2 mx-2 my-4' onChange={handlechangelaung}>
+
+            {SUPPORTED_LANUGUAGE.map(laung => (<option key={laung.identifier} value={laung.identifier}>{laung.name}</option>))}
+          </select>)}
+        <button className='text-white bg-purple-500 px-4 py-2 mx-2 my-4 rounded-lg'
+          onClick={hanbleGptsearch}>
+          {laungselect ? "HomePage" : "GPTSearch"}</button>
           <img className='w-12 h-12 m-2' src={user?.photoURL} alt="photos" />
      
           <button className='font-bold text-white' onClick={handleSignout}>Sign Out</button>

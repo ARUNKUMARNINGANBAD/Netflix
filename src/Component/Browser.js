@@ -4,15 +4,28 @@ import useNowplayingMovies from '../hooks/useNowplayingMovies'
 import Maincontainer from './Maincontainer';
 import Secondarycontainer from './Secondarycontainer';
 import useTrendingmovies from '../hooks/useTrendingmovies';
+import GptSearch from './GptSearch';
+import { useSelector } from 'react-redux'
 
 const Browser = () => {
+
+  const showGptSearch = useSelector((store) => store.gptsearch?.sliceToggle);
+  console.log(showGptSearch)
 
   useNowplayingMovies();
   useTrendingmovies();
 
   return (
     <div>
-    <Header />
+      <Header />
+      
+      { 
+        showGptSearch ? (<GptSearch />) :     
+        (<>
+          <Maincontainer />
+      <Secondarycontainer />
+      </>)
+      }
     { /*
     -moviecontainer
       - videobackground
@@ -21,8 +34,8 @@ const Browser = () => {
       - movielist *n
       - cards * n
      */}
-      <Maincontainer />
-      <Secondarycontainer />
+   
+
       
 
       </div>
