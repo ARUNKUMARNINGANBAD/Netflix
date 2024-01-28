@@ -61,8 +61,8 @@ const Header = () => {
     }, []);
 
   return (
-    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between' >
-      <img className='w-44 h-15'
+    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between bg-black sm:bg-blue-700 md:bg-green-700 flex-col md:flex-row ' >
+      <img className='w-44  mx-auto md:mx-0'
         src={ LOGO}
         alt='logo' />
       {user &&
@@ -72,10 +72,10 @@ const Header = () => {
 
             {SUPPORTED_LANUGUAGE.map(laung => (<option key={laung.identifier} value={laung.identifier}>{laung.name}</option>))}
           </select>)}
-        <button className='text-white bg-purple-500 px-4 py-2 mx-2 my-4 rounded-lg'
+        <button className='text-white bg-purple-500 px-4 py-2 mx-2 my-4 rounded-lg '
           onClick={hanbleGptsearch}>
           {laungselect ? "HomePage" : "GPTSearch"}</button>
-          <img className='w-12 h-12 m-2' src={user?.photoURL} alt="photos" />
+          <img className='hidden md:block w-12 h-12 m-2' src={user?.photoURL} alt="photos" />
      
           <button className='font-bold text-white' onClick={handleSignout}>Sign Out</button>
         </div>)

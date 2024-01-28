@@ -93,10 +93,10 @@ const Login = () => {
     <div>
     <Header />
     <div className='absolute'>
-        <img src={ Background} alt='Bg' />
+        <img className="" src={ Background} alt='Bg' />
       </div>
      
-      <form onSubmit={(e) => e.preventDefault()} className='w-3/12 p-12 absolute bg-black my-36 mx-auto right-0 left-0 text-white bg-opacity-80 rounded-lg'>
+      <form onSubmit={(e) => e.preventDefault()} className='w-full md:w-3/12 p-12 absolute bg-black my-36 mx-auto right-0 left-0 text-white bg-opacity-80 rounded-lg'>
         <h1 className='font-bold '>{istoggle ? "Sign In" : "Sign Up"}</h1>
         {!istoggle && (<input
           ref={name}
