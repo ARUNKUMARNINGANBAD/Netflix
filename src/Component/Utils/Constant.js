@@ -18,4 +18,7 @@ export const SUPPORTED_LANUGUAGE = [{ identifier: "en", name: "English" },
 
 export const IMAGE_CDN_URL = "https://image.tmdb.org/t/p/w500";
 
-export const OPEN_API_KEY = "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"
+//export const OPEN_API_KEY = "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"
+export const OPEN_API_KEY = process.env.REACT_APP_OPEN_API_KEY
+
+
