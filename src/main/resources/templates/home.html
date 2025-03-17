@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCW PAGE</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        h3 {
+            text-align: center;
+            background-color: #343a40;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .search-container {
+            position: sticky;
+            top: 60px; /* Height of h3 */
+            background-color: #f4f4f4;
+            padding: 10px 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        #search-dropdown {
+            position: absolute;
+            top: 100%; /* Position below the input */
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 100%; /* Match the input field's width */
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0; /* Remove margin to eliminate gap */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 120px; /* Height of h3 (60px) + height of search container (60px) */
+            z-index: 999; /* Ensure it stays below the search container */
+        }
+
+        /* Zebra striping for rows */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .center-message {
+            color: red;
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .user {
+            color: #ff66a3;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        // Fetch search suggestions from the server
+        async function fetchSearchSuggestions() {
+            const input = document.getElementById("flexjobname");
+            const dropdown = document.getElementById("search-dropdown");
+            const query = input.value;
+
+            if (query.length < 1) {
+                dropdown.style.display = "none";
+                dropdown.innerHTML = "";
+                return;
+            }
+
+            try {
+                const response = await fetch(/Dcwload/dashboard/search?query=${encodeURIComponent(query)});
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const results = await response.json();
+
+                dropdown.style.display = "block";
+                dropdown.innerHTML = results
+                    .map(
+                        (result) =>
+                            <div class="dropdown-item" onclick="selectSuggestion('${result}')">${result}</div>
+                    )
+                    .join("");
+            } catch (error) {
+                console.error("Error fetching search suggestions:", error);
+            }
+        }
+
+        // Select a suggestion from the dropdown
+        function selectSuggestion(value) {
+            document.getElementById("flexjobname").value = value;
+            document.getElementById("search-dropdown").style.display = "none";
+        }
+    </script>
+</head>
+
+<body>
+<h3>DCW</h3>
+<div class="center-message" th:text="${message}"></div>
+
+<!-- Search Container -->
+<div class="search-container">
+    <form th:action="@{/dashboard/searchByGroupId}" method="get">
+        <label id="asterisk" style="color:red">*</label>
+        <input type="text" id="flexjobname" name="flexjobname" placeholder="flexjobname" required
+               oninput="this.setCustomValidity(''); fetchSearchSuggestions();" />
+        <button type="submit">Search</button>
+        <a th:href="@{/dashboard/all}">Reset</a><br>
+    </form>
+    <div id="search-dropdown"></div>
+</div>
+
+<!-- Data Table -->
+<table>
+    <thead>
+    <tr>
+        <th>Company ID</th>
+        <th>Group ID</th>
+        <th>Variable ID</th>
+        <th>Variable Name</th>
+        <th>Variable Value</th>
+        <th>Operations</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ob:${list}">
+        <td th:text="${ob.company_id}"></td>
+        <td th:text="${ob.group_id}"></td>
+        <td th:text="${ob.variable_id}"></td>
+        <td th:text="${ob.variable_name}"></td>
+        <td th:text="${ob.variable_value}"></td>
+        <td>
+            <a th:href="@{/dashboard/edit(id=${ob.id}, groupid=${ob.group_id},variableid=${ob.variable_id})}">EDIT</a> |
+            <a th:href="@{/dashboard/copychange(group_id=${ob.group_id})}">Copy Change</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

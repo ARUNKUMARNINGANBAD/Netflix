@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            min-height: 100vh; /* Ensure the body takes full height of the viewport */
+            display: flex;
+            flex-direction: column;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        .form-group {
+            flex: 1 0 22%;
+            box-sizing: border-box;
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button-container {
+            width: 100%;
+            text-align: center;
+            margin-top: auto; /* Pushes the container to the bottom */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Add New Job</h1>
+<form id="dataForm" th:action="@{/dashboard/insertjobs}" method="POST">
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="Location" th:value="${dataList[0]}">
+    </div>
+    <div class="form-group">
+        <label for="assignedDeployment">Assigned Deployment</label>
+        <input type="text" id="assignedDeployment" name="Assigned Deployment" th:value="${dataList[1]}">
+    </div>
+    <div class="form-group">
+        <label for="flexJobName">FLEX Job Name</label>
+        <input type="text" id="flexJobName" name="FLEX Job Name" th:value="${dataList[2]}">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="Description" th:value="${dataList[3]}">
+    </div>
+    <div class="form-group">
+        <label for="businessOwner">Business Owner</label>
+        <input type="text" id="businessOwner" name="Business Owner" th:value="${dataList[4]}">
+    </div>
+    <div class="form-group">
+        <label for="costCenterId">Cost Center ID</label>
+        <input type="text" id="costCenterId" name="Cost Center ID" th:value="${dataList[5]}">
+    </div>
+    <div class="form-group">
+        <label for="businessJobName">Business Job Name</label>
+        <input type="text" id="businessJobName" name="Business Job Name" th:value="${dataList[6]}">
+    </div>
+    <div class="form-group">
+        <label for="fileName">File Name</label>
+        <input type="text" id="fileName" name="File Name" th:value="${dataList[7]}">
+    </div>
+    <div class="form-group">
+        <label for="fileType">File Type</label>
+        <input type="text" id="fileType" name="File Type" th:value="${dataList[8]}">
+    </div>
+    <div class="form-group">
+        <label for="fileTransferMethod">File Transfer Method</label>
+        <input type="text" id="fileTransferMethod" name="File Transfer Method" th:value="${dataList[9]}">
+    </div>
+    <div class="form-group">
+        <label for="printProductionType">Print Production Type</label>
+        <input type="text" id="printProductionType" name="Print Production Type" th:value="${dataList[10]}">
+    </div>
+    <div class="form-group">
+        <label for="baseStock1Id">Base Stock 1 ID</label>
+        <input type="text" id="baseStock1Id" name="Base Stock 1 ID" th:value="${dataList[11]}">
+    </div>
+    <div class="form-group">
+        <label for="baseStock2Id">Base Stock 2 ID</label>
+        <input type="text" id="baseStock2Id" name="Base Stock 2 ID" th:value="${dataList[12]}">
+    </div>
+    <div class="form-group">
+        <label for="baseStock3Id">Base Stock 3 ID</label>
+        <input type="text" id="baseStock3Id" name="Base Stock 3 ID" th:value="${dataList[13]}">
+    </div>
+    <div class="form-group">
+        <label for="baseStock4Id">Base Stock 4 ID</label>
+        <input type="text" id="baseStock4Id" name="Base Stock 4 ID" th:value="${dataList[14]}">
+    </div>
+    <div class="form-group">
+        <label for="baseStock5Id">Base Stock 5 ID</label>
+        <input type="text" id="baseStock5Id" name="Base Stock 5 ID" th:value="${dataList[15]}">
+    </div>
+    <div class="form-group">
+        <label for="duplexOrSimplex">Duplex or Simplex</label>
+        <input type="text" id="duplexOrSimplex" name="Duplex or Simplex" th:value="${dataList[16]}">
+    </div>
+    <div class="form-group">
+        <label for="micr">MICR</label>
+        <input type="text" id="micr" name="MICR" th:value="${dataList[17]}">
+    </div>
+    <div class="form-group">
+        <label for="specialFinishing">Special Finishing</label>
+        <input type="text" id="specialFinishing" name="Special Finishing" th:value="${dataList[18]}">
+    </div>
+    <div class="form-group">
+        <label for="normalDayTimePrintFileReceived">Normal Day & Time Print File Received</label>
+        <input type="text" id="normalDayTimePrintFileReceived" name="Normal Day & Time Print File Received" th:value="${dataList[19]}">
+    </div>
+    <div class="form-group">
+        <label for="sla">SLA</label>
+        <input type="text" id="sla" name="SLA" th:value="${dataList[20]}">
+    </div>
+    <div class="form-group">
+        <label for="compostionRequired">Compostion Required</label>
+        <input type="text" id="compostionRequired" name="Compostion Required" th:value="${dataList[21]}">
+    </div>
+    <div class="form-group">
+        <label for="printOutputColor">Print Output Color</label>
+        <input type="text" id="printOutputColor" name="Print Output Color" th:value="${dataList[22]}">
+    </div>
+    <div class="form-group">
+        <label for="printOutputResolution">Print Output Resolution</label>
+        <input type="text" id="printOutputResolution" name="Print Output Resolution" th:value="${dataList[23]}">
+    </div>
+    <div class="form-group">
+        <label for="sourcePlatform">Source Platform</label>
+        <input type="text" id="sourcePlatform" name="Source Platform" th:value="${dataList[24]}">
+    </div>
+    <div class="form-group">
+        <label for="specialPreProcessing">Special Pre-Processing</label>
+        <input type="text" id="specialPreProcessing" name="Special Pre-Processing" th:value="${dataList[25]}">
+    </div>
+    <div class="form-group">
+        <label for="automatedInserting">Automated Inserting?</label>
+        <input type="text" id="automatedInserting" name="Automated Inserting?" th:value="${dataList[26]}">
+    </div>
+    <div class="form-group">
+        <label for="mailRunDataFile">Mail Run Data File?</label>
+        <input type="text" id="mailRunDataFile" name="Mail Run Data File?" th:value="${dataList[27]}">
+    </div>
+    <div class="form-group">
+        <label for="avgNumberPagesInsertedIntoEnvelope">Avg. Number of Pages Inserted Into Envelope</label>
+        <input type="text" id="avgNumberPagesInsertedIntoEnvelope" name="Avg. Number of Pages Inserted Into Envelope" th:value="${dataList[28]}">
+    </div>
+    <div class="form-group">
+        <label for="outerEnvelopeId">Outer Envelope ID</label>
+        <input type="text" id="outerEnvelopeId" name="Outer Envelope ID" th:value="${dataList[29]}">
+    </div>
+    <div class="form-group">
+        <label for="insideBreEnvelopeId">Inside/BRE Envelope ID</label>
+        <input type="text" id="insideBreEnvelopeId" name="Inside/BRE Envelope ID" th:value="${dataList[30]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId1">Additional Insert ID 1</label>
+        <input type="text" id="additionalInsertId1" name="Additional Insert ID 1" th:value="${dataList[31]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId2">Additional Insert ID 2</label>
+        <input type="text" id="additionalInsertId2" name="Additional Insert ID 2" th:value="${dataList[32]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId3">Additional Insert ID 3</label>
+        <input type="text" id="additionalInsertId3" name="Additional Insert ID 3" th:value="${dataList[33]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId4">Additional Insert ID 4</label>
+        <input type="text" id="additionalInsertId4" name="Additional Insert ID 4" th:value="${dataList[34]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId5">Additional Insert ID 5</label>
+        <input type="text" id="additionalInsertId5" name="Additional Insert ID 5" th:value="${dataList[35]}">
+    </div>
+    <div class="form-group">
+        <label for="additionalInsertId6">Additional Insert ID 6</label>
+        <input type="text" id="additionalInsertId6" name="Additional Insert ID 6" th:value="${dataList[36]}">
+    </div>
+    <div class="form-group">
+        <label for="inlineStapling">Inline Stapling</label>
+        <input type="text" id="inlineStapling" name="Inline Stapling" th:value="${dataList[37]}">
+    </div>
+    <div class="form-group">
+        <label for="barcodeType">Barcode Type</label>
+        <input type="text" id="barcodeType" name="Barcode Type" th:value="${dataList[38]}">
+    </div>
+    <div class="form-group">
+        <label for="manualInsertionFulfillmentRequired">Manual Insertion/Fulfillment Required</label>
+        <input type="text" id="manualInsertionFulfillmentRequired" name="Manual Insertion/Fulfillment Required" th:value="${dataList[39]}">
+    </div>
+    <div class="form-group">
+        <label for="specialFinishingHandStamp">Special Finishing (hand stamp, manual folding, labeling, laminating, etc.)</label>
+        <input type="text" id="specialFinishingHandStamp" name="Special Finishing (hand stamp, manual folding, labeling, laminating, etc.)" th:value="${dataList[40]}">
+    </div>
+    <div class="form-group">
+        <label for="specialHandling">Special Handling (Manual Matching, Merging, Pulls, Review, other business process etc.)</label>
+        <input type="text" id="specialHandling" name="Special Handling (Manual Matching, Merging, Pulls, Review, other business process etc.)" th:value="${dataList[41]}">
+    </div>
+    <div class="form-group">
+        <label for="mailDeliveryMethod">Mail/Delivery Method</label>
+        <input type="text" id="mailDeliveryMethod" name="Mail/Delivery Method" th:value="${dataList[42]}">
+    </div>
+    <div class="form-group">
+        <label for="presort">Presort</label>
+        <input type="text" id="presort" name="Presort" th:value="${dataList[43]}">
+    </div>
+    <div class="form-group">
+        <label for="houseHolding">House Holding</label>
+        <input type="text" id="houseHolding" name="House Holding" th:value="${dataList[44]}">
+    </div>
+    <div class="form-group">
+        <label for="cassNcoa">CASS/NCOA</label>
+        <input type="text" id="cassNcoa" name="CASS/NCOA" th:value="${dataList[45]}">
+    </div>
+    <div class="form-group">
+        <label for="imb">IMB</label>
+        <input type="text" id="imb" name="IMB" th:value="${dataList[46]}">
+    </div>
+    <div class="form-group">
+        <label for="jobCycle">Job Cycle</label>
+        <input type="text" id="jobCycle" name="Job Cycle" th:value="${dataList[47]}">
+    </div>
+    <div class="form-group">
+        <label for="averageDailyImageVolume">Average Daily Image Volume</label>
+        <input type="text" id="averageDailyImageVolume" name="Average Daily Image Volume" th:value="${dataList[48]}">
+    </div>
+    <div class="form-group">
+        <label for="averageDailyPieceVolume">Average Daily Piece Volume</label>
+        <input type="text" id="averageDailyPieceVolume" name="Average Daily Piece Volume" th:value="${dataList[49]}">
+    </div>
+    <div class="form-group">
+        <label for="averageMonthlyImageVolume">Average Monthly Image Volume</label>
+        <input type="text" id="averageMonthlyImageVolume" name="Average Monthly Image Volume" th:value="${dataList[50]}">
+    </div>
+    <div class="form-group">
+        <label for="averageMonthlyPieceVolume">Average Monthly Piece Volume</label>
+        <input type="text" id="averageMonthlyPieceVolume" name="Average Monthly Piece Volume" th:value="${dataList[51]}">
+    </div>
+    <div class="form-group">
+        <label for="averageQuarterlyImageVolume">Average Quarterly Image Volume</label>
+        <input type="text" id="averageQuarterlyImageVolume" name="Average Quarterly Image Volume" th:value="${dataList[52]}">
+    </div>
+    <div class="form-group">
+        <label for="averageQuarterlyPieceVolume">Average Quarterly Piece Volume</label>
+        <input type="text" id="averageQuarterlyPieceVolume" name="Average Quarterly Piece Volume" th:value="${dataList[53]}">
+    </div>
+    <div class="form-group">
+        <label for="averageAnnualImageVolume">Average Annual Image Volume</label>
+        <input type="text" id="averageAnnualImageVolume" name="Average Annual Image Volume" th:value="${dataList[54]}">
+    </div>
+    <div class="form-group">
+        <label for="averageAnnualPieceVolume">Average Annual Piece Volume</label>
+        <input type="text" id="averageAnnualPieceVolume" name="Average Annual Piece Volume" th:value="${dataList[55]}">
+    </div>
+    <div class="form-group">
+        <label for="reviewApprovalRequired">Review / Approval Required</label>
+        <input type="text" id="reviewApprovalRequired" name="Review / Approval Required" th:value="${dataList[56]}">
+    </div>
+    <div class="form-group">
+        <label for="reprintRequests">Reprint Requests</label>
+        <input type="text" id="reprintRequests" name="Reprint Requests" th:value="${dataList[57]}">
+    </div>
+    <div class="form-group">
+        <label for="pdfCreationWithMetaData">PDF creation with Meta-data</label>
+        <input type="text" id="pdfCreationWithMetaData" name="PDF creation with Meta-data" th:value="${dataList[58]}">
+    </div>
+    <div class="form-group">
+        <label for="archive">Archive - Xerox or Client Repository</label>
+        <input type="text" id="archive" name="Archive - Xerox or Client Repository" th:value="${dataList[59]}">
+    </div>
+    <div class="form-group">
+        <label for="xeroxRetentionPeriod">Xerox Retention Period - from the print or mail date</label>
+        <input type="text" id="xeroxRetentionPeriod" name="Xerox Retention Period - from the print or mail date" th:value="${dataList[60]}">
+    </div>
+    <div class="form-group">
+        <label for="dailyProductionKpis">Daily Production KPIs</label>
+        <input type="text" id="dailyProductionKpis" name="Daily Production KPIs" th:value="${dataList[61]}">
+    </div>
+    <div class="form-group">
+        <label for="monthlyProductionKpis">Monthly Production KPIs</label>
+        <input type="text" id="monthlyProductionKpis" name="Monthly Production KPIs" th:value="${dataList[62]}">
+    </div>
+    <div class="form-group">
+        <label for="quarterlyKpis">Quarterly KPIs</label>
+        <input type="text" id="quarterlyKpis" name="Quarterly KPIs" th:value="${dataList[63]}">
+    </div>
+    <div class="form-group">
+        <label for="other">Other</label>
+        <input type="text" id="other" name="Other" th:value="${dataList[64]}">
+    </div>
+    <div class="form-group">
+        <label for="bu">BU</label>
+        <input type="text" id="bu" name="BU" th:value="${dataList[65]}">
+    </div>
+    <div class="form-group">
+        <label for="entity">Entity</label>
+        <input type="text" id="entity" name="Entity" th:value="${dataList[66]}">
+    </div>
+    <div class="form-group">
+        <label for="costCenter">Cost Center</label>
+        <input type="text" id="costCenter" name="Cost Center" th:value="${dataList[67]}">
+    </div>
+    <div class="form-group">
+        <label for="primary">Primary</label>
+        <input type="text" id="primary" name="Primary" th:value="${dataList[68]}">
+    </div>
+    <div class="form-group">
+        <label for="bob">BOB(Block of Business)</label>
+        <input type="text" id="bob" name="BOB(Block of Business)" th:value="${dataList[69]}">
+    </div>
+    <div class="form-group">
+        <label for="comments">Comments</label>
+        <input type="text" id="comments" name="Comments" th:value="${dataList[70]}">
+    </div>
+    <div class="form-group">
+        <label for="workFlowTitle">WorkFlow Title</label>
+        <input type="text" id="workFlowTitle" name="WorkFlow Title" th:value="${dataList[71]}">
+    </div>
+    <div class="form-group">
+        <label for="client">Client</label>
+        <input type="text" id="client" name="Client" th:value="${dataList[72]}">
+    </div>
+    <div class="form-group">
+        <label for="restricted">Restricted</label>
+        <input type="text" id="restricted" name="Restricted" th:value="${dataList[73]}">
+    </div>
+    <div class="form-group">
+        <label for="workflowType">Workflow Type</label>
+        <input type="text" id="workflowType" name="Workflow Type" th:value="${dataList[74]}">
+    </div>
+
+    <div class="form-group">
+        <label for="workflowTime">Workflow Time</label>
+        <input type="text" id="workflowTime" name="Workflow Time" th:value="${dataList[75]}">
+    </div>
+    <div class="form-group">
+        <label for="recordDetailApproval">Record Detail Approval</label>
+        <input type="text" id="recordDetailApproval" name="Record Detail Approval" th:value="${dataList[76]}">
+    </div>
+    <div class="form-group">
+        <label for="lastPrintedDate">Last Printed Date</label>
+        <input type="text" id="lastPrintedDate" name="Last Printed Date" th:value="${dataList[77]}">
+    </div>
+    <div class="form-group">
+        <label for="digitalFileGenerated">Digital File Generated</label>
+        <input type="text" id="digitalFileGenerated" name="Digital File Generated" th:value="${dataList[78]}">
+    </div>
+    <div class="form-group">
+        <label for="physicalSampleGenerated">Physical Sample Generated</label>
+        <input type="text" id="physicalSampleGenerated" name="Physical Sample Generated" th:value="${dataList[79]}">
+    </div>
+    <div class="form-group">
+        <label for="uat">UAT</label>
+        <input type="text" id="uat" name="UAT" th:value="${dataList[80]}">
+    </div>
+    <div class="form-group">
+        <label for="barcodePlacement">Barcode Placement</label>
+        <input type="text" id="barcodePlacement" name="Barcode Placement" th:value="${dataList[81]}">
+    </div>
+    <div class="form-group">
+        <label for="oomPrintStock1">OOM Print Stock 1</label>
+        <input type="text" id="oomPrintStock1" name="OOM Print Stock 1" th:value="${dataList[82]}">
+    </div>
+    <div class="form-group">
+        <label for="oomPrintStock2">OOM Print Stock 2</label>
+        <input type="text" id="oomPrintStock2" name="OOM Print Stock 2" th:value="${dataList[83]}">
+    </div>
+    <div class="form-group">
+        <label for="oomPrintStock3">OOM Print Stock 3</label>
+        <input type="text" id="oomPrintStock3" name="OOM Print Stock 3" th:value="${dataList[84]}">
+    </div>
+    <div class="form-group">
+        <label for="oomPrintStock4">OOM Print Stock 4</label>
+        <input type="text" id="oomPrintStock4" name="OOM Print Stock 4" th:value="${dataList[85]}">
+    </div>
+    <div class="form-group">
+        <label for="oomEnvelopeStock">OOM Envelope Stock</label>
+        <input type="text" id="oomEnvelopeStock" name="OOM Envelope Stock" th:value="${dataList[86]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert1">OOM Insert 1</label>
+        <input type="text" id="oomInsert1" name="OOM Insert 1" th:value="${dataList[87]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert2">OOM Insert 2</label>
+        <input type="text" id="oomInsert2" name="OOM Insert 2" th:value="${dataList[88]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert3">OOM Insert 3</label>
+        <input type="text" id="oomInsert3" name="OOM Insert 3" th:value="${dataList[89]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert4">OOM Insert 4</label>
+        <input type="text" id="oomInsert4" name="OOM Insert 4" th:value="${dataList[90]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert5">OOM Insert 5</label>
+        <input type="text" id="oomInsert5" name="OOM Insert 5" th:value="${dataList[91]}">
+    </div>
+    <div class="form-group">
+        <label for="oomInsert6">OOM Insert 6</label>
+        <input type="text" id="oomInsert6" name="OOM Insert 6" th:value="${dataList[92]}">
+    </div>
+    <div class="form-group">
+        <label for="oomMeterRate">OOM Meter Rate</label>
+        <input type="text" id="oomMeterRate" name="OOM Meter Rate" th:value="${dataList[93]}">
+    </div>
+
+    <div class="button-container">
+        <button type="submit">AddNewJob</button>
+    </div>
+
+</form>
+
+</body>

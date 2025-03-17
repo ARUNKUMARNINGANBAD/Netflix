@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assurant Bre Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        h3 {
+            text-align: center;
+            background-color : #343a40;
+            color : white;
+            padding: 15px 0;
+            margin: 0;
+        }
+
+        .header-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #343a40;
+        }
+
+        .header-buttons a {
+            text-decoration: none;
+            color: white;
+            background-color: #17a2b8;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .header-buttons a:hover {
+            background-color: #138496;
+        }
+
+        .header-buttons form input {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .header-buttons form input:hover {
+            background-color: #c82333;
+        }
+
+        .search-section {
+            padding: 20px;
+            text-align: center;
+            background-color: #e9ecef;
+        }
+
+        .search-section form {
+            display: inline-block;
+        }
+
+        .search-section input[type="number"] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .search-section button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-section button:hover {
+            background-color: #218838;
+        }
+
+        .report-section {
+            padding: 20px;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+            width:400px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .pagination {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        button[type="button"] {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        button[type="button"]:hover {
+            background-color: #e0a800;
+        }
+
+                .edit-row {
+            display: none;
+        }
+        .edit-row input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .edit-row button {
+            padding: 8px 12px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-row button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .edit-row button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .edit-row button[type="button"] {
+            background-color: #f44336;
+            color: white;
+        }
+        .edit-row button[type="button"]:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+
+<body>
+
+<h3>Bre Catalog</h3>
+
+<div class="search-section">
+    <form th:action="@{/dashboard/brecatalog}" method="get">
+        <label for="code">Search by code:</label>
+        <input type="text" id="code" name="code" th:value="${code}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div id="report" class="report-section">
+    <table id="report-table">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="profile, profileStat : ${profiles}" th:id="'row-' + ${profileStat.index}">
+            <!-- View Mode -->
+            <td th:text="${profile.code}" class="view-row"></td>
+            <td th:text="${profile.description}" class="view-row"></td>
+
+            <td class="view-row">
+                <button th:attr="onclick=|editRow(${profileStat.index})|">Edit</button>
+                <button th:attr="onclick=|addenv(${profileStat.index})|">Copy Change</button>
+            </td>
+            <!-- Edit Mode -->
+            <td colspan="16" class="edit-row" th:id="'edit-row-' + ${profileStat.index}">
+                <form th:action="@{/dashboard/brecatalog/update}" th:method="post">
+                    <input type="hidden" th:name="id" th:value="${profile.id}">
+                    <table>
+                        <tr>
+                            <td><input type="text" th:name="code" th:value="${profile.code}"></td>
+                            <td><input type="text" th:name="description" th:value="${profile.description}"></td>
+                            <td>
+                                <button type="submit" onclick="showSuccessAlert()">Save</button>
+                                <button type="button" th:attr="onclick=|cancelEdit(${profileStat.index})|">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+            <!-- Add new envelop/copy change Mode -->
+            <td colspan="16" class="edit-row" th:id="'add-edit-row-' + ${profileStat.index}">
+                <form th:action="@{/dashboard/brecatalog/add}" th:method="post">
+                    <table>
+                        <tr>
+                            <td><input type="text" th:name="code" th:value="${profile.code}"></td>
+                            <td><input type="text" th:name="description" th:value="${profile.description}"></td>
+                            <td>
+                                <button type="submit" onclick="showSuccessAlert()">Add</button>
+                                <button type="button" th:attr="onclick=|cancelEdit(${profileStat.index})|">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:if="${!page.isFirst()}" th:href="@{/dashboard/brecatalog(page=0, size=${size})}">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${page.hasPrevious()}" th:href="@{/dashboard/brecatalog(page=${page.getNumber()-1}, size=${size})}">Previous</a>
+            </li>
+            <li class="page-item d-flex align-items-center">
+                <form th:action="@{/dashboard/brecatalog}" method="get" class="d-flex align-items-center">
+                    <input type="number" name="page" min="0" th:max="${page.totalPages - 1}" class="form-control" placeholder="Page number" style="width: 100px;">
+                    <span class="mx-2">of [[${page.totalPages}]]</span>
+                    <select name="size" class="form-control mx-2">
+                        <option value="3" th:selected="${size == 3}">3</option>
+                        <option value="5" th:selected="${size == 5}">5</option>
+                        <option value="10" th:selected="${size == 10}">10</option>
+                        <option value="20" th:selected="${size == 20}">20</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Go</button>
+                </form>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${page.hasNext()}" th:href="@{/dashboard/brecatalog(page=${page.getNumber()+1}, size=${size})}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${!page.isLast()}" th:href="@{/dashboard/brecatalog(page=${page.getTotalPages()-1}, size=${size})}">Last</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script th:inline="javascript">
+    function editRow(index) {
+        document.querySelectorAll('#row-' + index + ' .view-row').forEach(el => el.style.display = 'none');
+        document.getElementById('edit-row-' + index).style.display = 'table-cell';
+    }
+
+    function addenv(index) {
+        document.querySelectorAll('#row-' + index + ' .view-row').forEach(el => el.style.display = 'none');
+        document.getElementById('add-edit-row-' + index).style.display = 'table-cell';
+    }
+
+    function cancelEdit(index) {
+        document.querySelectorAll('#row-' + index + ' .view-row').forEach(el => el.style.display = 'table-cell');
+        document.getElementById('edit-row-' + index).style.display = 'none';
+        document.getElementById('add-edit-row-' + index).style.display = 'none';
+    }
+
+    function showSuccessAlert() {
+        alert("Record updated successfully!");
+    }
+</script>
+
+</body>
+</html>

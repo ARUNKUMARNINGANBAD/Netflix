@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assurant DCWLoad</title>
+    <style>
+        /* General Styles */
+        body {
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: width 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(0, 123, 255, 0.7);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            margin:0;
+        }
+
+        .content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 5px;
+            margin:0;
+        }
+
+        button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            background: #FF4742;
+            box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+        }
+
+        button:hover,
+        button:active {
+            background-color: initial;
+            background-position: 0 0;
+            color: #FF4742;
+        }
+    </style>
+</head>
+<body>
+<div id="sidebar" class="sidebar">
+    <div style="display:flex; justify-content: space-between; align-items: center;">
+        <div style="color:orange" class="text-center text-success my-3">
+            Hi [[${username}]]
+        </div>
+        <form style="padding:0; margin: 0;" th:action="@{/logout}" method="POST" onsubmit="parent.window.location.href='/login?logout';">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <div style="margin-top:10px">
+        <a th:href="@{/dashboard/loadcsvfile}" target="content-frame">Upload CSV File</a>
+        <a th:href="@{/dashboard/all}" target="content-frame">Edit / Copy Change Job</a>
+        <a th:href="@{/dashboard/insert}" target="content-frame">Add New Job</a>
+        <a th:href="@{/dashboard/envelop}" target="content-frame">Add Envelop</a>
+        <a th:href="@{/dashboard/insertprofile}" target="content-frame">Add Insert Profile</a>
+        <a th:href="@{/dashboard/brecatalog}" target="content-frame">Add Bre Catalog</a>
+        <a th:href="@{/dashboard/loaddumpjobs}" target="content-frame">Load Dump</a>
+        <a th:href="@{/dashboard/exceptions}" target="content-frame">Add Unbundle Job</a>
+        <a th:href="@{/dashboard/distrubutionprint}" target="content-frame">Edit Distribution Print</a>
+        <a th:href="@{/dashboard/loaddcw}" target="content-frame">Load Dcw Stock & Insert Product</a>
+    </div>
+</div>
+<div id="content" class="content">
+    <iframe id="content-frame" name="content-frame" src="dashboard/def"></iframe>
+</div>
+
+<script>
+    // Set the default page dynamically
+    window.onload = function () {
+        const contentFrame = document.getElementById('content-frame');
+        if (!contentFrame.src || contentFrame.src === window.location.href) {
+            contentFrame.src = '/Dcwload/dashboard/def'; // Default page URL
+        }
+    };
+</script>
+</body>
+</html>

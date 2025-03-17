@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thymeleaf Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .large-input {
+            width: calc(100% - 22px);
+            height: 40px;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        td {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Load Dump</h1>
+
+<form th:action="@{/dashboard/loaddumpjobs}" method="get">
+    <label for="flexjobs">Enter New Inserted Jobname:</label>
+    <input type="text" id="flexjobs" name="flexjobs" class="large-input"/>
+    <button type="submit" class="submit-button">Submit</button>
+</form>
+
+<div th:if="${list != null and list.size() > 0}">
+    <table border="1">
+        <thead>
+        <tr>
+            <!-- Render headers (first row) -->
+            <th th:each="header : ${list[0]}" th:text="${header}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Render data rows (from the second row onward) -->
+        <tr th:each="row : ${list}" th:if="${row != list[0]}">
+            <td th:each="cell : ${row}" th:text="${cell}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${list == null or list.size() == 0}">
+    <p>No data available to display.</p>
+</div>
+
+</body>
+</html>

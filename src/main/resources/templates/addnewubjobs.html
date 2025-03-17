@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add/Edit Exception</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 30vh;
+    }
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+    div {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+    input[type="text"] {
+        width: calc(100% - 10px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    a {
+        margin-top: 15px;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    a:hover {
+        background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+<h1>Add/Edit Exception</h1>
+<form th:action="@{/dashboard/exceptions/save}" th:object="${exception}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <div>
+    <label>Flexjob Name: </label>
+    <input type="text" th:field="*{flexjobname}"/>
+  </div>
+  <div>
+    <label>Comments: </label>
+    <input type="text" th:field="*{comments}"/>
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+<a th:href="@{/dashboard/exceptions}">Back to List</a>
+</body>
+</html>

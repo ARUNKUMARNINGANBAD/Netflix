@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exception List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h3 {
+            text-align: center;
+            background-color : #343a40;
+            color : white;
+            padding: 15px 0;
+            margin: 0;
+            width : 100%;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .header a,
+        .header form {
+            margin: 0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .header a {
+            background-color: #28a745;
+        }
+        .header a:hover {
+            background-color: #218838;
+        }
+        .header form input {
+            background-color: #dc3545;
+            border: none;
+            cursor: pointer;
+        }
+        .header form input:hover {
+            background-color: #c82333;
+        }
+        .header .links a {
+            background-color: #0069d9;
+            margin-left: 10px;
+        }
+        .header .links a:hover {
+            background-color: #005cbf;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:first-child {
+            background-color: #28a745;
+            color: white;
+        }
+        #editbutton:first-child {
+            background-color: #6F769A;
+            color: white;
+        }
+        button[type="submit"]:first-child:hover {
+            background-color: #218838;
+        }
+        button[type="submit"]:last-child {
+            background-color: #dc3545;
+            color: white;
+        }
+        button[type="submit"]:last-child:hover {
+            background-color: #c82333;
+        }
+        form {
+            display: inline;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 5px;
+        }
+        .pagination a {
+            display: block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0056b3;
+        }
+        .search-form input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white; /* Changed background color to white */
+        }
+        .search-form button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h3>Exception List</h3>
+<div class="header">
+    <a th:href="@{/dashboard/exceptions/add}">Add New Exception</a>
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 1px;">
+        <form class="search-form" th:action="@{/dashboard/exceptions}" method="get">
+            <input style="background-color:white" type="text" name="search" placeholder="Search by Flexjob Name" th:value="${search}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<table>
+    <tr>
+        <th>Flexjob Name</th>
+        <th>Comments</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="exception : ${exceptions}" th:if="${#strings.containsIgnoreCase(exception.flexjobname, search)}">
+        <td th:text="${exception.flexjobname}"></td>
+        <td th:text="${exception.comments}"></td>
+        <td>
+            <form th:action="@{/dashboard/exceptions/edit/{id}(id=${exception.id})}" method="get">
+                <button id="editbutton" type="submit">Edit</button>
+            </form>
+            <form th:action="@{/dashboard/exceptions/delete/{id}(id=${exception.id})}" method="get">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" th:if="${!page.isFirst()}" th:href="@{/dashboard/exceptions(page=0)}">First</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:if="${page.hasPrevious()}" th:href="@{/dashboard/exceptions(page=${page.getNumber()-1})}">Previous</a>
+        </li>
+        <!-- Input field for user to enter page number -->
+        <li class="page-item d-flex align-items-center">
+            <form th:action="@{/dashboard/exceptions}" method="get" class="d-flex align-items-center">
+                <input type="number" name="page" min="0" th:max="${page.totalPages - 1}" class="form-control" placeholder="Page number" style="width: 100px;">
+                <span class="mx-2">of [[${page.totalPages}]]</span>
+                <button type="submit" class="btn btn-primary">Go</button>
+            </form>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:if="${page.hasNext()}" th:href="@{/dashboard/exceptions(page=${page.getNumber()+1})}">Next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:if="${!page.isLast()}" th:href="@{/dashboard/exceptions(page=${page.getTotalPages()-1})}">Last</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

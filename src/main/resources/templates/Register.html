@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <title>Register Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        #message {
+            color: green;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>USER REGISTER PAGE</h3>
+    <div id="form">
+        <form th:action="@{/save}" method="POST">
+            <div class="form-group">
+                <label for="userName">USERNAME:</label>
+                <input type="text" id="userName" name="userName" required
+                       oninvalid="this.setCustomValidity('Please enter your name')"
+                       oninput="setCustomValidity('')"/>
+            </div>
+            <div class="form-group">
+                <label for="userEmail">EMAIL:</label>
+                <input type="email" id="userEmail" name="userEmail" required
+                       oninvalid="this.setCustomValidity('Please enter a valid email address')"
+                       oninput="setCustomValidity('')"/>
+            </div>
+            <div class="form-group">
+                <label for="userPassword">PASSWORD:</label>
+                <input type="password" id="userPassword" name="userPassword" required
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                       oninvalid="this.setCustomValidity('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character')"
+                       oninput="setCustomValidity('')"/>
+            </div>
+            <div class="form-group">
+                <label for="userRoles">ROLES:</label>
+                <input type="checkbox" id="userRoles" name="userRoles" required value="ADMIN"/> ADMIN
+            </div>
+            <div class="form-group">
+                <input class="button" type="submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+    <p id="message">[[${message}]]</p>
+    <p><a th:href="@{/login}">Click here To Login</a></p>
+</div>
+</body>
+</html>

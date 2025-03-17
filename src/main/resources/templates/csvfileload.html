@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload file</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #0056b3;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        /* Form Styles */
+        form {
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        button {
+            background-color: #0056b3;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #003f88;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 800px;
+            table-layout: auto;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        /* Success or Error Message Styles */
+        .message {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .message.success {
+            color: green;
+        }
+
+        .message.error {
+            color: red;
+        }
+    </style>
+
+    <script>
+        function confirmSubmit(event) {
+            if (!confirm("Are you sure you want to process the uploaded CSV?")) {
+                event.preventDefault(); // Cancel form submission if the user clicks "Cancel"
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Upload DCW File</h1>
+<h4 style="color: orange;">Please ensure the CSV file matches the template, containing exactly 94 columns with all necessary data filled in!</h4>
+<!-- Display success or error message -->
+<div th:if="${message}" style="color: red; font-weight: bold;">
+    <p th:text="${message}"></p>
+</div>
+
+<form th:action="@{/dashboard/upload-csv}" method="post" enctype="multipart/form-data">
+    <label for="file">Choose a DCW CSV file:</label>
+    <input type="file" id="file" name="file" accept=".csv" required>
+    <button type="submit">Upload</button>
+
+</form>
+
+<h2>Uploaded Data for Proofreading:</h2>
+<div class="table-container" th:if="${csvDataWrapper != null}">
+    <table>
+        <thead>
+        <tr>
+            <th th:each="header : ${headers}" th:text="${header}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${csvDataWrapper.csvData}">
+            <td th:each="cell : ${row}" th:text="${cell}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Submit button to confirm insert -->
+    <form th:action="@{/dashboard/process-csv}" method="post" onsubmit="confirmSubmit(event)">
+        <button type="submit">Submit for Processing</button>
+    </form>
+</div>
+</body>
+</html>
